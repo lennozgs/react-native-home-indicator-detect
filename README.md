@@ -15,7 +15,10 @@ import HomeIndicatorDetect from "react-native-home-indicator-detect";
 
 // ...
 
-const result = await HomeIndicatorDetect.multiply(3, 7);
+if(HomeIndicatorDetect.DETECT)
+    console.log('Device has home indicator');
+else
+    console.log('Device does not have home indicator');
 ```
 
 ## Contributing

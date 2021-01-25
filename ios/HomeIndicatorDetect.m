@@ -4,16 +4,26 @@
 
 RCT_EXPORT_MODULE()
 
-// Example method
-// See // https://reactnative.dev/docs/native-modules-ios
-RCT_REMAP_METHOD(multiply,
-                 multiplyWithA:(nonnull NSNumber*)a withB:(nonnull NSNumber*)b
-                 withResolver:(RCTPromiseResolveBlock)resolve
-                 withRejecter:(RCTPromiseRejectBlock)reject)
-{
-  NSNumber *result = @([a floatValue] * [b floatValue]);
++ (BOOL)requiresMainQueueSetup { return YES; }
 
-  resolve(result);
+- (NSDictionary *)constantsToExport
+{
+
+    if (@available(iOS 11.0, *)) {
+        UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
+        CGFloat topPadding = window.safeAreaInsets.top;
+        CGFloat bottomPadding = window.safeAreaInsets.bottom;
+
+        if ((bottomPadding > 0.0)) {
+            NSLog(@"Has indicator");
+            return @{
+                    @"DETECT": @true
+            };
+        }
+    }
+
+    NSLog(@"Does not have indicator");
+    return @{ @"DETECT": @false };
 }
 
 @end
